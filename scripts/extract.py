@@ -61,8 +61,6 @@ SUPPORTED_EXTENSIONS = {
 
 PYTHON_DEPENDENCIES = {
     "docling": "docling",
-    "paddlex": "paddleocr[all]",
-    "paddle": "paddlepaddle",
     "PyPDF2": "PyPDF2",
     "pdfminer": "pdfminer.six",
     "ebooklib": "ebooklib",
@@ -181,14 +179,6 @@ def prepare_dependencies(ext: str, extraction_mode: str, install_mode: str) -> N
             feature="Technical PDF extraction",
             module_names=["docling"],
             fallback="the PDF text fallback chain",
-            install_mode=install_mode,
-        )
-
-    if ext == ".pdf" and extraction_mode == "paddleocr":
-        offer_dependency_install(
-            feature="PaddleOCR PDF extraction (image/scanned PDFs, Chinese documents)",
-            module_names=["paddlex", "paddle"],
-            fallback="the Docling or pdftotext fallback chain",
             install_mode=install_mode,
         )
 
@@ -578,23 +568,6 @@ def detect_structure(text: str) -> dict:
     }
 
 
-def extract_with_paddleocr(pdf_path: str) -> str | None:
-    """OCR + document structure extraction using PaddleOCR PP-StructureV3.
-    Best for scanned/image-based PDFs and Chinese-language documents."""
-    try:
-        from paddleocr import PPStructureV3
-
-        pipeline = PPStructureV3()
-        results = list(pipeline.predict(pdf_path))
-        page_mds = [r._to_markdown() for r in results]
-        md = pipeline.concatenate_markdown_pages(page_mds)
-        return md.get("markdown_texts", "")
-    except ImportError:
-        return None
-    except Exception:
-        return None
-
-
 def extract_with_docling(pdf_path: str) -> str | None:
     """Layout-aware extraction using Docling. Best for technical books with tables and code."""
     try:
@@ -622,7 +595,7 @@ def extract_with_docling(pdf_path: str) -> str | None:
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: extract.py <path-to-document> [--mode technical|text|paddleocr] [--install-missing ask|yes|no]", file=sys.stderr)
+        print("Usage: extract.py <path-to-document> [--mode technical|text] [--install-missing ask|yes|no]", file=sys.stderr)
         print(f"Supported formats: {supported_formats_message()}", file=sys.stderr)
         sys.exit(1)
 
@@ -635,7 +608,7 @@ def main():
         idx = sys.argv.index("--mode")
         if idx + 1 < len(sys.argv):
             extraction_mode = sys.argv[idx + 1].lower()
-    if extraction_mode not in ("technical", "text", "paddleocr"):
+    if extraction_mode not in ("technical", "text"):
         extraction_mode = "text"
 
     if not os.path.exists(input_path):
@@ -700,16 +673,6 @@ def main():
         pages_label = "spine_items"
     elif ext == ".pdf":
         print(f"Extracting PDF: {input_path}")
-        if extraction_mode == "paddleocr":
-            print("Mode: paddleocr — using PaddleOCR PP-StructureV3 (OCR + layout)...", end=" ", flush=True)
-            text = extract_with_paddleocr(input_path)
-            if text:
-                method = "paddleocr"
-                print("OK")
-            else:
-                print("not available, falling back to Docling")
-                extraction_mode = "technical"
-
         if extraction_mode == "technical":
             print("Mode: technical — using Docling (layout-aware)...", end=" ", flush=True)
             text = extract_with_docling(input_path)

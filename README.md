@@ -73,16 +73,13 @@ Output: Desktop/english-grammar-知识笔记.md
 git clone https://github.com/meiyulin22/knowledge-to-notes.git ~/.claude/skills/knowledge-to-notes
 
 # Install Python dependencies (for document extraction)
-pip install "paddleocr[all]" paddlepaddle==3.2.1
+pip install PyPDF2 pdfminer.six
 
 # Or install only what you need:
-# For text PDFs only:     pip install PyPDF2 pdfminer.six
-# For image-based PDFs:   pip install "paddleocr[all]" paddlepaddle==3.2.1
+# For PDF:                pip install PyPDF2 pdfminer.six
 # For EPUB:               pip install ebooklib beautifulsoup4
 # For DOCX:               pip install python-docx
-
-# ⚠️ Windows users: paddlepaddle 3.3.1 has a OneDNN bug.
-# Use 3.2.1:  pip install paddlepaddle==3.2.1
+# For technical PDFs:     pip install docling
 ```
 
 ### Usage
@@ -108,14 +105,15 @@ Open the file, copy all content, paste into Notion or Obsidian. Done.
 
 | Format | Extraction Method | Notes |
 |--------|-------------------|-------|
-| **PDF** (text) | pdftotext / PyPDF2 / pdfminer | Auto-detected |
-| **PDF** (image-only) | PaddleOCR PP-StructureV3 | Requires `paddleocr[all]` + `paddlepaddle` |
+| **PDF** | pdftotext / PyPDF2 / pdfminer | Text-based PDFs only |
 | **Markdown / TXT** | Direct read | Instant |
 | **EPUB** | ebooklib + BeautifulSoup4 | Best quality |
 | **DOCX** | python-docx | Tables preserved |
 | **HTML** | BeautifulSoup4 | Clean text extraction |
 | **RTF** | striprtf | - |
 | **MOBI / AZW** | Calibre ebook-convert | Requires Calibre installed |
+
+> 🔍 **Need image-based PDF support?** Switch to the [`feature/ocr`](https://github.com/meiyulin22/knowledge-to-notes/tree/feature/ocr) branch — it adds PaddleOCR PP-StructureV3 for scanned/image-only PDFs and Chinese documents.
 
 ## How It Works
 
