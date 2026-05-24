@@ -2,7 +2,9 @@
 
 > **Transform messy documents into stunning, Notion-ready study notes.**
 >
-> 🖼️ **Have scanned PDFs, images, or documents with pictures?** Switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch — it adds built-in OCR for anything with images.
+> 🤖 **Using a multimodal LLM host** (Claude Code, Cursor with Claude/GPT-4o, Gemini)? You're on the right branch — your model reads images natively, no OCR needed.
+>
+> 🔌 **Using a text-only LLM host** (DeepSeek, older local models without vision)? Switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch — it bolts PaddleOCR on as an external OCR plugin so your text-only model can still handle image PDFs.
 
 Tired of dense PDF walls of text that kill your motivation before you even start reading? Knowledge to Notes turns raw documents — PDFs, Markdown files, EPUBs, Word docs — into beautifully formatted markdown notes with rich visual hierarchy, strategic emoji landmarks, and bite-sized chunks that make learning addictive.
 
@@ -125,7 +127,7 @@ Open the file, copy all content, paste into Notion or Obsidian. Done.
 | **RTF** | striprtf | - |
 | **MOBI / AZW** | Calibre ebook-convert | Requires Calibre installed |
 
-> 🔍 **Need image support (scanned PDFs, photos, screenshots)?** Switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch.
+> 🔍 **Running on a text-only LLM** (DeepSeek, etc.) and need image PDF support? Switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch — it adds PaddleOCR as an external plugin.
 
 ## Design Philosophy
 
@@ -167,7 +169,7 @@ knowledge-to-notes/
 A: The Python extraction layer runs locally for free. The AI formatting step uses Claude Code tokens (typically 2K-10K tokens for most documents).
 
 **Q: What if I have scanned/image-based PDFs?**
-A: Switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch — it adds PaddleOCR for image recognition.
+A: If your LLM host is multimodal (Claude, GPT-4o, Gemini), this branch already handles it — the model reads page images directly. If your host is text-only (DeepSeek, older local models), switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch — it bolts PaddleOCR on as an external OCR plugin.
 
 **Q: Can I use this without Claude Code?**
 A: You can use `extract.py` standalone for text extraction, but the AI formatting step requires a Claude-compatible agent.
