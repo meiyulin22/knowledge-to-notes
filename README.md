@@ -24,39 +24,50 @@ Tired of dense PDF walls of text that kill your motivation before you even start
 ## Demo
 
 ```
-Input:  A 13-page image-only PDF (Chinese English grammar guide)
+Input:  A messy React study note (Markdown)
 
-Output: Desktop/english-grammar-知识笔记.md
+Output: Desktop/react-hooks-知识笔记.md
 ```
 
-### Before (raw extracted text):
+### Before (raw notes):
 ```
-感叹词：①表示情感 ②独立结构代词①人称代词②物主代词③反身代词④指示代词⑤不定代词
-动词①及物动词②不及物动词③系动词的特殊用法帅
-16种时态：一般现在时表示现在的情况、状态或持征...
+React Hooks
+useState lets you add state to functional components.
+useEffect runs after render. Cleanup with return function.
+useContext avoids prop drilling. useReducer for complex state.
+useMemo caches values. useCallback caches functions.
+Custom hooks let you reuse stateful logic between components.
 ```
 
 ### After (formatted note):
 ```markdown
-📗  秒懂整个语法体系
+📗  React Hooks — The Complete Cheatsheet
 
-> 💡 一句话: 英语 16 种时态 = 时间 × 状态，把握公式就能推导一切
+> 💡 One sentence: Hooks let you "hook into" React state and lifecycle
+  from plain functions — no classes needed.
 
-🎯 词法速查
+🎯 The 7 Essential Hooks
 
-📊 六大词类一览
-| 词类 | 英文 | 记忆口诀 | 示例 |
-|------|------|----------|------|
-| 😮 感叹词 | Interjection | 独立表达情感 | oh!, oops! |
-| 🫵 代词 | Pronoun | 代替名词 | I, my, myself |
-...
+📊 Hook Overview
+| Hook | Purpose | Returns | When to use |
+|------|---------|---------|-------------|
+| 🪝 useState | Local state | [value, setter] | Any component state |
+| 🔄 useEffect | Side effects | cleanup fn | API calls, timers, DOM |
+| 🌐 useContext | Global state | context value | Avoid prop drilling |
+| 🗃️ useReducer | Complex state | [state, dispatch] | Multi-step state logic |
+| 🧠 useMemo | Cache value | memoized value | Expensive calculations |
+| ⚡ useCallback | Cache function | memoized fn | Stable callbacks to children |
+| 🛠️ Custom Hooks | Reuse logic | your choice | Shared behavior |
 
-💎 关键洞察
-> 英语词法 6 大类其实就干两件事: 描述动作和描述对象
+💎 Key Insight
+> useState + useEffect cover 80% of hooks usage.
+  Master those two before the others.
 
-⚡ 常见陷阱
-❌ He go to school every day.
-✅ He goes to school every day.
+⚡ Common Trap
+❌ Calling setState and reading state immediately (stale closure)
+✅ Use the functional updater: setCount(prev => prev + 1)
+
+📝 Practice: Build a useWindowSize custom hook in 5 minutes
 ```
 
 ## Quick Start
