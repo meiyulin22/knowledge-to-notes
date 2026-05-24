@@ -73,13 +73,16 @@ Output: Desktop/english-grammar-知识笔记.md
 git clone https://github.com/meiyulin22/knowledge-to-notes.git ~/.claude/skills/knowledge-to-notes
 
 # Install Python dependencies (for document extraction)
-pip install "paddleocr[all]" paddlepaddle
+pip install "paddleocr[all]" paddlepaddle==3.2.1
 
 # Or install only what you need:
 # For text PDFs only:     pip install PyPDF2 pdfminer.six
-# For image-based PDFs:   pip install "paddleocr[all]" paddlepaddle
+# For image-based PDFs:   pip install "paddleocr[all]" paddlepaddle==3.2.1
 # For EPUB:               pip install ebooklib beautifulsoup4
 # For DOCX:               pip install python-docx
+
+# ⚠️ Windows users: paddlepaddle 3.3.1 has a OneDNN bug.
+# Use 3.2.1:  pip install paddlepaddle==3.2.1
 ```
 
 ### Usage
