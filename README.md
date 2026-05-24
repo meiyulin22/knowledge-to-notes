@@ -2,6 +2,11 @@
 
 > **Transform messy documents into stunning, Notion-ready study notes.**
 
+> 🔌 **This branch is for text-only LLM hosts** (DeepSeek, older local models — anything without native vision).
+> It bolts PaddleOCR on as an external OCR plugin so your text-only model can still handle image-based PDFs.
+>
+> ✨ **Using Claude / GPT-4o / Gemini?** Use the [main](https://github.com/meiyulin22/knowledge-to-notes/tree/main) branch instead — your model already has native vision and doesn't need PaddleOCR.
+
 Tired of dense PDF walls of text that kill your motivation before you even start reading? Knowledge to Notes turns raw documents — PDFs, Markdown files, EPUBs, Word docs — into beautifully formatted markdown notes with rich visual hierarchy, strategic emoji landmarks, and bite-sized chunks that make learning addictive.
 
 ## What Problem This Solves
@@ -16,7 +21,7 @@ Tired of dense PDF walls of text that kill your motivation before you even start
 
 ## What It Does
 
-1. **Extracts** text from PDF (with OCR for image-based PDFs), EPUB, DOCX, Markdown, HTML, TXT, RTF, MOBI/AZW
+1. **Extracts** text from PDF (with built-in OCR — gives text-only LLMs the ability to "see" image PDFs), EPUB, DOCX, Markdown, HTML, TXT, RTF, MOBI/AZW
 2. **Analyzes** structure — identifies topics, subtopics, key concepts, tables, code blocks
 3. **Formats** with UX design principles — emoji navigation, comparison tables, insight callouts, memory hooks
 4. **Outputs** a single clean `.md` file — copy and paste into Notion, Obsidian, or any markdown editor
