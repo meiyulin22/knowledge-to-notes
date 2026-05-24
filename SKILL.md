@@ -131,6 +131,24 @@ Read the full extracted text and identify:
 
 ---
 
+## Step 4.5 — Relevance Check (Technical Content, REQUIRED)
+
+Before formatting technical content, run a relevance audit. Answer: **is this still worth learning today?**
+
+```markdown
+📊 **Learning Priority: What's worth your time?**
+
+| Technology | Current Status | Time Investment |
+|------------|---------------|-----------------|
+| ... | ✅ Core / ⚠️ Legacy | Deep dive / Skim / Skip |
+```
+
+- ✅ **Core** → full treatment: code examples, quick-ref tables, common traps
+- ⚠️ **Legacy / Outdated** → ZERO code blocks, one summary table only, name the modern replacement
+- Always put this table BEFORE the first chapter so the reader knows what to skip
+
+---
+
 ## Step 5 — Format with UX Principles
 
 Generate the output note. Apply these rules:
@@ -231,7 +249,7 @@ Use these markers consistently to guide the reader's attention:
 | Marker | Meaning | Behavior |
 |--------|---------|----------|
 | ⭐ **Key Point** | High-frequency / exam-critical / practical must-know | Expand with extra detail |
-| ⚠️ **Outdated** | Old approach replaced by modern alternatives | Brief mention only, don't deep-dive |
+| ⚠️ **Outdated** | Old approach replaced by modern alternatives | **ZERO code blocks.** One summary table at most. Name the modern replacement. Never enumerate APIs. |
 | 💡 **Bonus** | Worth knowing but not in original notes | Short supplement, 2-3 lines max |
 | ❗ **Correction** | Original notes have an error | Show original → corrected version |
 
