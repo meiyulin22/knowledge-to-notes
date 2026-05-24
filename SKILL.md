@@ -60,7 +60,7 @@ If not found or unsupported format, report error and list supported formats: PDF
 
 ---
 
-## Step 2 — Identify Content Type
+## Step 2 — Identify Content Type & Context
 
 Ask the user (or auto-detect from filename/extension):
 
@@ -68,9 +68,15 @@ Ask the user (or auto-detect from filename/extension):
 > 1. **Technical** — code, formulas, tables (programming, math, science)
 > 2. **Conceptual** — frameworks, definitions, prose (humanities, business, theory)
 > 3. **Mixed** — both technical and conceptual
-> 4. **Not sure** — I'll auto-detect"
+> 4. **Not sure** — I'll auto-detect
+
+> *(Optional) Background context to help me write better notes:*
+> - Your prior knowledge: [e.g. "know HTML/CSS, new to React"]
+> - Focus areas: [e.g. "interview prep", "underlying principles", "practical use"]
+> - Source type: [e.g. "textbook", "video notes", "self-organized"]
 
 Store as `CONTENT_TYPE`: `technical`, `conceptual`, `mixed`.
+If the user provides background context, use it to calibrate explanation depth and highlight relevant content.
 
 ---
 
@@ -209,6 +215,44 @@ Copy the file content and paste into Notion, Obsidian, or any markdown editor.
 
 ---
 
+## Content Enrichment
+
+Go beyond formatting — improve the content itself:
+
+- **Add missing context**: if the notes skip a prerequisite concept that would help understanding, briefly add it
+- **Correct errors**: if the original notes contain factual mistakes, fix them and note the correction
+- **Short and direct**: for conceptual questions, answer concisely — don't over-explain
+- **Explain with analogies**: use everyday-life analogies to make abstract concepts click
+
+## Annotation System
+
+Use these markers consistently to guide the reader's attention:
+
+| Marker | Meaning | Behavior |
+|--------|---------|----------|
+| ⭐ **Key Point** | High-frequency / exam-critical / practical must-know | Expand with extra detail |
+| ⚠️ **Outdated** | Old approach replaced by modern alternatives | Brief mention only, don't deep-dive |
+| 💡 **Bonus** | Worth knowing but not in original notes | Short supplement, 2-3 lines max |
+| ❗ **Correction** | Original notes have an error | Show original → corrected version |
+
+## Quick-Reference Tables
+
+Every major section MUST end with a markdown table:
+
+```markdown
+📊 **Quick Reference: <Topic>**
+
+| Item | Key Point | Notes |
+|------|-----------|-------|
+| ... | ... | ... |
+```
+
+- 3-6 rows maximum
+- Only the most essential comparisons / syntax / commands
+- No fluff, no long explanations in table cells
+
+---
+
 ## Quality Rules
 
 1. **One glance, one answer** — each section should answer one question immediately
@@ -216,6 +260,7 @@ Copy the file content and paste into Notion, Obsidian, or any markdown editor.
 3. **Table or text, never both** — don't repeat table content in prose
 4. **Bite-sized chunks** — no paragraph over 4 lines
 5. **Front-load value** — most important insight in the first section
-6. **End with mastery** — final section should make the reader feel they've mastered the topic
+6. **End with mastery** — every section ends with a quick-reference table
 7. **No raw walls of text** — break up anything longer than 6 lines
-8. **Language matches source** — output in the same language as the input document
+8. **Language matches source** — output in the same language as the input document; keep code, commands, and technical terms in their original language
+9. **No preamble** — output the note content directly, no "Here's your formatted note" intros
