@@ -1,6 +1,7 @@
 # Knowledge to Notes (k2n)
 
 > **Transform messy documents into stunning, Notion-ready study notes.**
+> 🖼️ **Have scanned PDFs, images, or documents with pictures?** Switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch — it adds built-in OCR for anything with images: scanned books, photos, screenshots, image-only PDFs, and more.
 
 Tired of dense PDF walls of text that kill your motivation before you even start reading? Knowledge to Notes turns raw documents — PDFs, Markdown files, EPUBs, Word docs — into beautifully formatted markdown notes with rich visual hierarchy, strategic emoji landmarks, and bite-sized chunks that make learning addictive.
 
@@ -16,7 +17,7 @@ Tired of dense PDF walls of text that kill your motivation before you even start
 
 ## What It Does
 
-1. **Extracts** text from PDF (with OCR for image-based PDFs), EPUB, DOCX, Markdown, HTML, TXT, RTF, MOBI/AZW
+1. **Extracts** text from PDF, EPUB, DOCX, Markdown, HTML, TXT, RTF, MOBI/AZW
 2. **Analyzes** structure — identifies topics, subtopics, key concepts, tables, code blocks
 3. **Formats** with UX design principles — emoji navigation, comparison tables, insight callouts, memory hooks
 4. **Outputs** a single clean `.md` file — copy and paste into Notion, Obsidian, or any markdown editor
@@ -84,16 +85,13 @@ Custom hooks let you reuse stateful logic between components.
 git clone https://github.com/meiyulin22/knowledge-to-notes.git ~/.claude/skills/knowledge-to-notes
 
 # Install Python dependencies (for document extraction)
-pip install "paddleocr[all]" paddlepaddle==3.2.1
+pip install PyPDF2 pdfminer.six
 
 # Or install only what you need:
-# For text PDFs only:     pip install PyPDF2 pdfminer.six
-# For image-based PDFs:   pip install "paddleocr[all]" paddlepaddle==3.2.1
-# For EPUB:               pip install ebooklib beautifulsoup4
-# For DOCX:               pip install python-docx
-
-# ⚠️ Windows users: paddlepaddle 3.3.1 has a OneDNN bug.
-# Use 3.2.1:  pip install paddlepaddle==3.2.1
+# For PDF:       pip install PyPDF2 pdfminer.six
+# For EPUB:      pip install ebooklib beautifulsoup4
+# For DOCX:      pip install python-docx
+# For DOCX:      pip install python-docx
 ```
 
 ### Usage
@@ -119,14 +117,15 @@ Open the file, copy all content, paste into Notion or Obsidian. Done.
 
 | Format | Extraction Method | Notes |
 |--------|-------------------|-------|
-| **PDF** (text) | pdftotext / PyPDF2 / pdfminer | Auto-detected |
-| **PDF** (image-only) | PaddleOCR PP-StructureV3 | Requires `paddleocr[all]` + `paddlepaddle` |
+| **PDF** | pdftotext / PyPDF2 / pdfminer | Text-based PDFs |
 | **Markdown / TXT** | Direct read | Instant |
 | **EPUB** | ebooklib + BeautifulSoup4 | Best quality |
 | **DOCX** | python-docx | Tables preserved |
 | **HTML** | BeautifulSoup4 | Clean text extraction |
 | **RTF** | striprtf | - |
 | **MOBI / AZW** | Calibre ebook-convert | Requires Calibre installed |
+
+> 🔍 **Need image support (scanned PDFs, photos, screenshots)?** Switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch.
 
 ## How It Works
 
@@ -139,7 +138,7 @@ Open the file, copy all content, paste into Notion or Obsidian. Done.
      Input           Python (free)        AI (token cost)        Output
 ```
 
-- **extract.py**: Python script that auto-detects format and picks the best extraction method. For image-based PDFs, it uses PaddleOCR's PP-StructureV3 pipeline (12 AI models for layout analysis, text detection/recognition, table extraction, and formula recognition). All OCR runs locally — no API calls.
+- **extract.py**: Python script that auto-detects format and picks the best extraction method (pdftotext, PyPDF2, ebooklib, python-docx, etc.). All extraction runs locally — no API calls.
 - **Claude Code**: Reads extracted text, analyzes structure, and formats it with UX-driven design principles into a polished markdown note.
 
 ## Design Philosophy
@@ -159,14 +158,12 @@ Every design choice serves one goal: make the reader *want* to keep reading.
 | Layer | Technology |
 |-------|-----------|
 | AI formatting | Claude Code / Amp (LLM agent) |
-| OCR engine | PaddleOCR PP-StructureV3 (12-model pipeline) |
 | PDF extraction | pdftotext (poppler), PyPDF2, pdfminer.six |
 | EPUB extraction | ebooklib + BeautifulSoup4 |
 | DOCX extraction | python-docx |
-| Layout analysis | PP-DocLayout, PP-DocBlockLayout (deep learning models) |
-| Text recognition | PP-OCRv5 (109-language OCR) |
-| Table recognition | SLANeXt, SLANet+, RT-DETR-L |
-| Formula recognition | PP-FormulaNet |
+| HTML extraction | BeautifulSoup4 |
+| RTF extraction | striprtf |
+| MOBI/AZW extraction | Calibre ebook-convert |
 
 ## Project Structure
 
@@ -175,9 +172,8 @@ knowledge-to-notes/
 ├── SKILL.md              # Claude Code skill definition (the AI prompt)
 ├── README.md             # This file
 └── scripts/
-    └── extract.py        # Document extraction engine (818 lines)
-                          # Supports 10+ formats with auto-detection
-                          # 4 extraction modes: text, technical, paddleocr, auto
+    └── extract.py        # Document extraction engine
+                          # Supports 7+ formats with auto-detection
 ```
 
 ## Comparison
@@ -187,19 +183,16 @@ knowledge-to-notes/
 | Output | One beautiful `.md` note | Full skill directory (SKILL.md + chapters/ + glossary/...) |
 | Use case | Read and copy-paste to Notion | Query via slash command in Claude Code |
 | Design focus | Human readability (UX) | Machine query-ability (token efficiency) |
-| PDF image OCR | ✅ PaddleOCR | ❌ (do_ocr=False by default) |
 | Output location | Desktop (for easy access) | ~/.claude/skills/ (for agent use) |
+| PDF image OCR | Via [full](https://github.com/meiyulin22/knowledge-to-notes/tree/full) branch | ❌ (do_ocr=False by default) |
 
 ## FAQ
 
 **Q: Does it cost money?**
 A: The Python extraction layer runs locally for free. The AI formatting step uses Claude Code tokens (typically 2K-10K tokens for most documents, which costs a few cents).
 
-**Q: Can it handle Chinese documents?**
-A: Yes. PaddleOCR PP-OCRv5 supports 109 languages, and PP-StructureV3 handles Chinese layout particularly well. Chinese text recognition accuracy is state-of-the-art.
-
 **Q: What if my PDF has no text layer (pure images)?**
-A: Use `--mode paddleocr` in extract.py, or let the skill auto-detect. PaddleOCR will OCR every page and extract the text, then the AI formats it. It's slower (5-15s per page) but produces excellent results.
+A: This branch handles text-based documents only. For image-based PDFs and scanned documents, switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch — it adds PaddleOCR for image recognition.
 
 **Q: Can I use this without Claude Code?**
 A: You can use `extract.py` standalone for text extraction, but the AI formatting step requires a Claude-compatible agent. For non-agent use, you could adapt the SKILL.md prompt to work with the Claude API directly.
