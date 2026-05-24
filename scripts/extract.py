@@ -51,11 +51,13 @@ WORDS_PER_TOKEN = 0.75  # approximate
 
 TEXT_EXTENSIONS = {".txt", ".text", ".md", ".markdown", ".rst", ".adoc", ".asciidoc"}
 HTML_EXTENSIONS = {".html", ".htm", ".xhtml"}
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".tiff", ".bmp", ".webp"}
 CALIBRE_EBOOK_EXTENSIONS = {".mobi", ".azw", ".azw3"}
 SUPPORTED_EXTENSIONS = {
     ".pdf", ".epub", ".docx", ".rtf",
     *TEXT_EXTENSIONS,
     *HTML_EXTENSIONS,
+    *IMAGE_EXTENSIONS,
     *CALIBRE_EBOOK_EXTENSIONS,
 }
 
@@ -719,6 +721,17 @@ def main():
 
         pages = count_pages(input_path)
         pages_label = "pages"
+    elif ext in IMAGE_EXTENSIONS:
+        print(f"Extracting image: {input_path}")
+        text = extract_with_paddleocr(input_path)
+        if text and text.strip():
+            method = "paddleocr"
+            print("OK")
+        else:
+            print("ERROR: PaddleOCR not available. Install with: pip install \"paddleocr[all]\" paddlepaddle==3.2.1", file=sys.stderr)
+            sys.exit(1)
+        pages = 0
+        pages_label = "images"
     elif ext in TEXT_EXTENSIONS:
         print(f"Extracting text document: {input_path}")
         text = read_text_file(input_path)
