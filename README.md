@@ -2,7 +2,7 @@
 
 > **Transform messy documents into stunning, Notion-ready study notes.**
 
-> 🖼️ **Have scanned PDFs or image-based documents?** Switch to the **[with-image-pdf](https://github.com/meiyulin22/knowledge-to-notes/tree/with-image-pdf)** branch — it adds built-in OCR for images, scanned books, and Chinese documents.
+> 🖼️ **Have scanned PDFs, images, or documents with pictures?** Switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch — it adds built-in OCR for anything with images: scanned books, photos, screenshots, image-only PDFs, and more.
 
 Tired of dense PDF walls of text that kill your motivation before you even start reading? Knowledge to Notes turns raw documents — PDFs, Markdown files, EPUBs, Word docs — into beautifully formatted markdown notes with rich visual hierarchy, strategic emoji landmarks, and bite-sized chunks that make learning addictive.
 
@@ -115,7 +115,7 @@ Open the file, copy all content, paste into Notion or Obsidian. Done.
 | **RTF** | striprtf | - |
 | **MOBI / AZW** | Calibre ebook-convert | Requires Calibre installed |
 
-> 🔍 **Need image-based PDF support?** Switch to the **[with-image-pdf](https://github.com/meiyulin22/knowledge-to-notes/tree/with-image-pdf)** branch — it adds built-in OCR for scanned and image-only PDFs.
+> 🔍 **Need image support (scanned PDFs, photos, screenshots)?** Switch to the **[full](https://github.com/meiyulin22/knowledge-to-notes/tree/full)** branch.
 
 ## How It Works
 
